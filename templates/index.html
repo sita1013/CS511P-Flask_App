@@ -1,0 +1,18 @@
+<html>
+<head><title>Scottish Industrial Statistics</title>
+</head>
+<body>
+    <h1>Industrial Stats for Scotland</h1>
+
+        {% for row in rows %}
+        <p>Year: 
+        <b>{{row["Year"]}}</b> | 
+        {{row["Measurement"]}} | 
+        {{row["Units"]}} | 
+        {{row["Value"]}} | 
+        {{row["Industry_Sector"]}}
+        </p>
+        {% endfor %}
+
+</body>
+</html>

@@ -1,2 +1,8 @@
 # CS551P Flask App
 https://statistics.gov.scot/slice?dataset=http%3A%2F%2Fstatistics.gov.scot%2Fdata%2Fgross-domestic-product-annual-output-by-industry&http%3A%2F%2Fpurl.org%2Flinked-data%2Fcube%23measureType=http%3A%2F%2Fstatistics.gov.scot%2Fdef%2Fmeasure-properties%2Fannual-growth-rate&http%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod=http%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2005&http%3A%2F%2Fstatistics.gov.scot%2Fdef%2Fdimension%2FindustrySector%28sic07%29=http%3A%2F%2Fstatistics.gov.scot%2Fdef%2Fconcept%2Findustry-sector-sic-07%2Fwater-supply-and-sewerage-section-e
+
+
+
+https://github.com/scharlau/polar_bears_p
+
+https://github.com/scharlau/shopping_exercise_p
