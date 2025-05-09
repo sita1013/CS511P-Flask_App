@@ -2,7 +2,7 @@ FeatureCode,FeatureName,FeatureType,DateCode,Measurement,Units,Value,Industry Se
 S92000003,Scotland,Country,2000,Annual growth rate,Percent Growth,4.1,Section D,"Section H,J","Transport, Storage and Communication"
 S92000003,Scotland,Country,2000,Annual growth rate,Percent Growth,3.8,Section C,"Section G,I","Distribution, Hotels and Restaurants"
 S92000003,Scotland,Country,2000,Annual growth rate,Percent Growth,17.8,"Section H,J",Section D,"Electricity, Gas, Steam, and Air"
-S92000003,Scotland,Country,2000,Annual growth rate,Percent Growth,0.1,Section O-T,Section C,Manufactoring
+S92000003,Scotland,Country,2000,Annual growth rate,Percent Growth,0.1,Section O-T,Section C,Manufacturing
 S92000003,Scotland,Country,1999,Annual growth rate,Percent Growth,-3.2,Section D,Section O-T,Government and Other Services
 S92000003,Scotland,Country,1999,Annual growth rate,Percent Growth,-2.7,"Section G,I",Section B,Mining & Quarrying
 S92000003,Scotland,Country,2000,Annual growth rate,Percent Growth,5.5,Section E,Section G-T,Services

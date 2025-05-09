@@ -1,31 +1,55 @@
 import csv
 import sqlite3
 
-    # open the connection to the database
-conn = sqlite3.connect('polar_bear_data.db')
+DB_NAME = 'scottish_stats.db'
+conn = sqlite3.connect(DB_NAME)
 cur = conn.cursor()
-
-    # drop the data from the table so that if we rerun the file, we don't repeat values
-conn.execute('DROP TABLE IF EXISTS deployments')
+cur.execute('DROP TABLE IF EXISTS deployments')
 print("table dropped successfully");
-    # create table again
-conn.execute('CREATE TABLE deployments (BearID INTEGER, PTT_ID INTEGER, capture_lat REAL, capture_long REAL, Sex TEXT, Age_class TEXT, Ear_applied TEXT)')
+cur.execute('DROP TABLE IF EXISTS sectors')
 print("table created successfully");
+cur.execute('''
+    CREATE TABLE sectors (
+        id INTEGER PRIMARY KEY AUTOINCREMENT, 
+        code TEXT UNIQUE, 
+        name TEXT
+    )
+''')
+cur.execute('''
+    CREATE TABLE deployments (
+        id INTEGER PRIMARY KEY AUTOINCREMENT, 
+        date_code INTEGER, 
+        measurement TEXT,
+        units TEXT, 
+        value REAL,
+        sector_code TEXT,
+        FOREIGN KEY (sector_code) REFERENCES sectors(code) 
+    )
+''')
 
-    # open the file to read it into the database
 with open('scottish_stats.csv', newline='') as f:
-    reader = csv.reader(f, delimiter=",")
-    next(reader) # skip the header line
+    reader = csv.DictReader(f)
+    sectors_seen = set()
     for row in reader:
-        print(row)
-
-        Date = int(row[3])
-        Measurement = (row[4])
-        Units = (row[5])
-        Value = float(row[6])
-        Industry_Sector = row[7]
-
-        cur.execute('INSERT INTO deployments VALUES (?,?,?,?,?)', (Date, Measurement, Units, Value, Industry_Sector))
-    print("data parsed successfully");
-    conn.commit()
-    conn.close()
+        date = int(row['DateCode'])
+        measurement = (row['Measurement'])
+        units = (row['Units'])
+        value = float(row['Value']) if row['Value'] else None
+        sector_code = row['Industry Sector (SIC 07)']
+        sector_name = row['Industry Type']
+        if not sector_code or not sector_name: 
+            continue
+        if sector_code not in sectors_seen: 
+            cur.execute(
+                'INSERT OR IGNORE INTO sectors (code, name) VALUES (?, ?)',
+                (sector_code, sector_name)
+            )
+            sectors_seen.add(sector_code)
+        cur.execute('''
+                INSERT INTO deployments (date_code, measurement, units, value, sector_code)
+                VALUES (?,?,?,?,?)
+                ''', 
+                (date, measurement, units, value, sector_code))  
+conn.commit()
+conn.close()
+print("data parsed successfully")

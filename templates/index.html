@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-    <html>
-    <head><title>Scottish Industrial Statistics</title>
-    </head>
-        <body>
-            <h1>Industrial Stats for Scotland</h1>
+<html>
+<head><title>Scottish Industrial Statistics</title>
+</head>
+    <body>
+        <h1>Industrial Stats for Scotland</h1>
 
-                {% for row in rows %}
-                <p>Year: 
-                <b>{{row["Year"]}}</b> | 
-                {{row["Measurement"]}} | 
-                {{row["Units"]}} | 
-                {{row["Value"]}} | 
-                {{row["Industry_Sector"]}}
-                </p>
-                {% endfor %}
-        </body>
-    </html>
+        {% for row in rows %}
+            <p>Date:</strong> {{row["date_code"]}} | 
+            {{row["measurement"]}} | 
+            {{row["units"]}} | 
+            {{row["value"]}} | 
+            {{row["industry_name"]}}
+            </p>
+        {% endfor %}
+     </body>
+</html>
