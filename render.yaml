@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: traffic-stats-app
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn traffic_stats:app"
