@@ -1,17 +1,60 @@
 <!DOCTYPE html>
 <html>
-<head><title>Scottish Industrial Statistics</title>
+<head><title>Scottish Traffic Statistics</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        table {
+            border-collapse: collapse;
+            width: 60%;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .form-row {
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
-    <body>
-        <h1>Industrial Stats for Scotland</h1>
-
+<body>
+    <h1>Traffic Stats Filter</h1>
+    <form method="get">
+        <div class="form-row">
+            <label for="year">Select Year:</label>
+            <select name="year" id="year">
+                {% for y in years %}
+                    <option value="{{ y }}" {% if selected_year == y %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+            <label for="feature">Select Area:</label>
+            <select name="feature" id="feature">
+                {% for f in features %}
+                    <option value="{{ f }}" {% if selected_feature == f %}selected{% endif %}>{{ f }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Filter</button>
+        </div>
+    </form>
+    {% if rows %}
+    <table>
+        <tr>
+            <th>Units</th>
+            <th>Value</th>
+            <th>Measurements</th>
+        </tr>
         {% for row in rows %}
-            <p>Date:</strong> {{row["date_code"]}} | 
-            {{row["measurement"]}} | 
-            {{row["units"]}} | 
-            {{row["value"]}} | 
-            {{row["industry_name"]}}
-            </p>
+        <tr>
+            <td title="{{ row['indicator_name'] }}">{{ row['units'] }}</td>
+            <td>{{ row['value'] }}</td>
+            <td>{{ row['measurement'] }}</td>
+        </tr>        
         {% endfor %}
-     </body>
+    </table>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+    </body>
 </html>
