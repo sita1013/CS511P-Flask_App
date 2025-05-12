@@ -1,8 +1,10 @@
 import sqlite3
 
 DB_PATH = 'traffic_stats.db'
+#two connected tables below
 
 def get_years_and_features():
+    #specific to filtering by year and locations in scotland
     conn = sqlite3.connect('traffic_stats.db')
     cur = conn.cursor()
     years = [row[0] for row in cur.execute('SELECT DISTINCT date_code FROM traffic_stats ORDER BY date_code')]
@@ -11,6 +13,7 @@ def get_years_and_features():
     return years, features
 
 def get_filtered_data(year=None, feature=None):
+    #specific to making sure it shows the indicator, value with correct units and measurements
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()

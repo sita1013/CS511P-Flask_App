@@ -40,22 +40,25 @@ def parse_csv():
             units = (row['Units'])
             value = float(row['Value']) if row['Value'] else None
             indicator_name = (row['Indicator (road network traffic)'])
-            if not feature_name or not feature_type: 
-                continue
-            if indicator_name not in indicator_cache: 
-                cur.execute(
-                    'INSERT OR IGNORE INTO indicators (name) VALUES (?)',
-                    (indicator_name,)
-                )
-                conn.commit()
-                cur.execute('SELECT id FROM indicators WHERE name = ?', (indicator_name,))
-                indicator_cache[indicator_name] = cur.fetchone()[0]
+            try: 
+                if not feature_name or not feature_type: 
+                    continue
+                if indicator_name not in indicator_cache: 
+                    cur.execute(
+                        'INSERT OR IGNORE INTO indicators (name) VALUES (?)',
+                        (indicator_name,)
+                    )
+                    conn.commit()
+                    cur.execute('SELECT id FROM indicators WHERE name = ?', (indicator_name,))
+                    indicator_cache[indicator_name] = cur.fetchone()[0]
 
-            indicator_id = indicator_cache[indicator_name]
-            cur.execute('''
-                INSERT INTO traffic_stats (feature_name, feature_type, date_code, measurement, units, value, indicator_id)
-                VALUES (?,?,?,?,?,?,?)
-            ''', (feature_name, feature_type, date_code, measurement, units, value, indicator_id))  
+                indicator_id = indicator_cache[indicator_name]
+                cur.execute('''
+                    INSERT INTO traffic_stats (feature_name, feature_type, date_code, measurement, units, value, indicator_id)
+                    VALUES (?,?,?,?,?,?,?)
+                ''', (feature_name, feature_type, date_code, measurement, units, value, indicator_id))  
+            except: 
+                print("There was an issue with parsing the data")
     conn.commit()
     conn.close()
     print("CSV parsed and loaded into traffic_stats.db")
